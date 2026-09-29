@@ -1,0 +1,12 @@
+# Intestazioni per Cloudflare Pages (valgono per i file statici).
+# Niente Content-Security-Policy per ora: va provata con il widget TradingView vero prima di attivarla.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+# I font non cambiano mai nome: si possono tenere in cache un anno
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

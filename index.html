@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saveforex — Academy &amp; Systems · Saverio Berlinzani</title>
+<meta name="description" content="Saveforex — Academy &amp; Systems dal 2009. Formazione, community e trading systems sul mercato valutario con Saverio Berlinzani. Impara ad essere profittevole attraverso la leva bassa.">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- TICKER: quotazioni TradingView (terza parte), caricate SOLO dopo consenso (vedi assets/app.js).
+     Senza consenso, o senza JavaScript, resta il segnaposto con i soli nomi dei cambi: mai prezzi.
+     Il segnaposto ha la stessa altezza del widget (46px): nessun salto di layout.
+     La configurazione qui sotto è dati inerti (non viene eseguita); i simboli vanno tenuti allineati ai nomi del segnaposto. -->
+<div class="tv-ticker" id="tvTicker" role="region" aria-label="Quotazioni dei cambi">
+  <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+  </div>
+  <div class="tv-placeholder">
+    <div class="tv-ph-in">
+      <span class="tv-pairs" aria-hidden="true">EUR/USD · GBP/USD · USD/JPY · EUR/GBP · AUD/USD · USD/CHF · EUR/JPY · USD/CAD · Oro</span>
+      <span class="tv-note"><span class="tv-note-long">Quotazioni fornite da TradingView, servizio di terze parti</span><span class="tv-note-short">via TradingView</span></span>
+      <span class="tv-status" id="tvStatus" role="status"></span>
+      <button type="button" class="btn tv-load" id="tvLoad">Carica quotazioni live</button>
+    </div>
+  </div>
+  <script type="application/json" id="tvConfig">
+  {
+    "symbols": [
+      { "proName": "FX:EURUSD", "title": "EUR/USD" },
+      { "proName": "FX:GBPUSD", "title": "GBP/USD" },
+      { "proName": "FX:USDJPY", "title": "USD/JPY" },
+      { "proName": "FX:EURGBP", "title": "EUR/GBP" },
+      { "proName": "FX:AUDUSD", "title": "AUD/USD" },
+      { "proName": "FX:USDCHF", "title": "USD/CHF" },
+      { "proName": "FX:EURJPY", "title": "EUR/JPY" },
+      { "proName": "FX:USDCAD", "title": "USD/CAD" },
+      { "proName": "TVC:GOLD", "title": "Oro" }
+    ],
+    "showSymbolLogo": false,
+    "isTransparent": true,
+    "displayMode": "compact",
+    "colorTheme": "dark",
+    "locale": "it"
+  }
+  </script>
+</div>
+
+<!-- NAV -->
+<header id="header">
+  <nav>
+    <a class="brand" href="#top" aria-label="Saveforex">
+      <svg class="mark" viewBox="0 0 40 40" fill="none">
+        <rect x="1" y="1" width="38" height="38" rx="3" stroke="#c9a064" stroke-width="1.2"/>
+        <rect x="11" y="20" width="3.4" height="11" fill="#5a9cd0"/>
+        <rect x="11.5" y="16" width="2.4" height="4" fill="#5a9cd0"/>
+        <rect x="11.5" y="31" width="2.4" height="3" fill="#5a9cd0"/>
+        <rect x="18.3" y="13" width="3.4" height="15" fill="#e7c98c"/>
+        <rect x="18.8" y="9" width="2.4" height="4" fill="#e7c98c"/>
+        <rect x="18.8" y="28" width="2.4" height="3" fill="#e7c98c"/>
+        <rect x="25.6" y="17" width="3.4" height="9" fill="#79b394"/>
+        <rect x="26.1" y="13" width="2.4" height="4" fill="#79b394"/>
+        <rect x="26.1" y="26" width="2.4" height="3" fill="#79b394"/>
+        <path d="M7 27 L13 21 L20 24 L27 13 L33 9" stroke="#c9a064" stroke-width="1" opacity=".5"/>
+      </svg>
+      <span class="wordmark">
+        <span class="wm-top">SAVE<span>FOREX</span></span>
+        <span class="wm-sub">Academy &amp; Systems · 2009</span>
+      </span>
+    </a>
+    <div class="navlinks" id="navlinks">
+      <a href="#ecosistema">Ecosistema</a>
+      <a href="#academy">Academy</a>
+      <a href="#sistemi">Trading Systems</a>
+      <a href="#team">Chi siamo</a>
+      <a class="btn btn-discord" href="https://discord.gg/ygQ2rHzjn4" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4.4A19 19 0 0 0 15.3 3l-.24.5a14 14 0 0 1 4.1 1.3 13 13 0 0 0-11 0A14 14 0 0 1 12.3 3.5L12 3a19 19 0 0 0-4.6 1.4C4 8 3.3 11.4 3.6 14.8A19 19 0 0 0 8.5 17l.6-1a12 12 0 0 1-2-1c.17-.1.33-.2.5-.3a13 13 0 0 0 11 0l.5.3a12 12 0 0 1-2 1l.6 1a19 19 0 0 0 4.9-2.2c.4-4-.7-7.4-2.6-10.4ZM9.7 13c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Zm4.6 0c-.9 0-1.6-.8-1.6-1.8s.7-1.8 1.6-1.8 1.6.8 1.6 1.8-.7 1.8-1.6 1.8Z"/></svg>
+        Discord
+      </a>
+      <a class="btn btn-solid" href="#contatti">Entra nella community</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero" style="padding-top:64px">
+  <div class="wrap">
+    <div class="eyebrow rv">Trading sul mercato valutario · dal 2009</div>
+    <h1 class="rv" style="transition-delay:.05s">
+      Il mercato dei cambi,<br>
+      <span class="ln2">spiegato <em>davvero</em>.</span>
+    </h1>
+    <p class="lead rv" style="transition-delay:.12s">
+      Saveforex è l'ecosistema di formazione, community e <b>trading systems</b> fondato da
+      <b>Saverio Berlinzani</b>. Operatività FOREX condivisa
+      ogni giorno in tempo reale. La filosofia è una sola: <b>imparare ad essere
+      profittevoli attraverso la leva bassa</b>.
+    </p>
+    <div class="hero-cta rv" style="transition-delay:.18s">
+      <a class="btn btn-solid" href="#academy">Scopri i corsi
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#ecosistema">Webinar &amp; Community LIVE</a>
+    </div>
+    <div class="hero-stats rv" style="transition-delay:.24s">
+      <div class="stat"><div class="n">dal <span>2009</span></div><div class="l">Academy &amp; Systems</div></div>
+      <div class="stat"><div class="n"><span>S1</span>—<span>S7</span></div><div class="l">Le metodologie operative</div></div>
+      <div class="stat"><div class="n">ogni <span>giorno</span></div><div class="l">Operatività in tempo reale</div></div>
+      <div class="stat"><div class="n"><span>40+</span> anni</div><div class="l">Market making, brokeraggio e consulenza</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSISTEMA -->
+<section id="ecosistema">
+  <div class="sec-head rv">
+    <div class="kicker"><span class="num">01</span> — L'ecosistema</div>
+    <h2>Tre pilastri, <em>un unico percorso</em> verso il mercato</h2>
+    <p>Tutto ciò che serve a un trader: la formazione strutturata, la community che opera dal vivo
+       e i sistemi automatici.</p>
+  </div>
+  <div class="wrap">
+    <div class="eco">
+      <div class="card col-4 rv">
+        <div class="glow"></div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 4h18v12H3z" stroke="currentColor" stroke-width="1.3"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.3"/><path d="M6 11l3-3 3 2 5-5" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <div class="idx">PILASTRO 01</div>
+        <h3>Community &amp; Webinar LIVE</h3>
+        <p>Una vera scuola di trading quotidiana: senti la voce di Saverio, vedi il suo desktop
+           e osservi le operazioni in tempo reale, supportato da una chat dedicata.</p>
+        <ul>
+          <li>Webinar live con analisi tecnica e macroeconomica</li>
+          <li>Morning Briefing giornaliero e Open Trades</li>
+          <li>Chat di supporto e contenuti extra</li>
+          <li>Accesso gratuito per un periodo, poi su abbonamento</li>
+        </ul>
+      </div>
+      <div class="card col-4 rv" style="transition-delay:.06s">
+        <div class="glow"></div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4L2 8l10 4 10-4-10-4z" stroke="currentColor" stroke-width="1.3"/><path d="M6 10v6c0 1.5 12 1.5 12 0v-6" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <div class="idx">PILASTRO 02</div>
+        <h3>Academy &amp; Corsi</h3>
+        <p>Dai fondamentali del Forex fino alle metodologie "S" e all'hedging. Video-lezioni on-demand
+           dall'area riservata e corsi live nel weekend.</p>
+        <ul>
+          <li>Corso FX Base, Hedging avanzato e Macroeconomia</li>
+          <li>Corso completo in due giornate (sabato e domenica)</li>
+          <li>Slide PDF, prima lezione gratuita</li>
+          <li>Accesso da qualsiasi dispositivo</li>
+        </ul>
+      </div>
+      <div class="card col-4 rv" style="transition-delay:.04s">
+        <div class="glow"></div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <div class="idx">PILASTRO 03</div>
+        <h3>Trading Systems</h3>
+        <p>Sistemi automatici (Expert Advisor) sviluppati da Saverio Berlinzani per il mercato valutario,
+           pensati per affiancare l'operatività discrezionale.</p>
+        <ul>
+          <li>BluAtlantico — algoritmo FX, focus sulla sicurezza</li>
+          <li>VerdeDollaro — logica Anti-Martingala</li>
+          <li>Diversificazione di portafoglio</li>
+          <li>Disponibili su abbonamento</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEBINAR SPLIT -->
+<section id="webinar" style="padding-top:40px">
+  <div class="wrap">
+    <div class="split">
+      <div class="rv">
+        <div class="kicker"><span class="num">02</span> — Community LIVE</div>
+        <h2 style="font-family:var(--serif);font-weight:360;font-size:clamp(28px,4vw,46px);line-height:1.05;letter-spacing:-.015em;margin-top:18px">Educare i trader,<br><em>tutti i giorni</em>.</h2>
+        <p style="color:var(--muted);margin-top:18px;font-weight:300;max-width:50ch">
+          Non un segnale isolato, ma un metodo osservato dal vivo. Il webinar è una piattaforma dove
+          vedi l'analisi del mercato dei cambi in tempo reale; la chat scritta fa da supporto e
+          permette di seguire passo passo le operazioni.</p>
+        <div class="feat-list">
+          <div class="feat"><div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M5 8l7-5 7 5" stroke="currentColor" stroke-width="1.4"/></svg></div>
+            <div><h4>Morning Briefing</h4><p>Il punto sui mercati ogni mattina, prima dell'apertura operativa.</p></div></div>
+          <div class="feat"><div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M7 21h10" stroke="currentColor" stroke-width="1.4"/></svg></div>
+            <div><h4>Open Trades &amp; contenuti extra</h4><p>Le posizioni aperte e materiali di approfondimento sempre disponibili.</p></div></div>
+          <div class="feat"><div class="fi"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 15a4 4 0 01-4 4H8l-5 4V7a4 4 0 014-4h10a4 4 0 014 4z" stroke="currentColor" stroke-width="1.4"/></svg></div>
+            <div><h4>Chat di supporto</h4><p>Analisi tecnica e macroeconomica, consulenza generica per neofiti e non.</p></div></div>
+        </div>
+        <a class="btn btn-solid" style="margin-top:34px" href="#contatti">Richiedi l'accesso</a>
+      </div>
+      <div class="panel rv" style="transition-delay:.1s">
+        <div class="terminal">
+          <div class="bar"><i></i><i></i><i></i></div>
+          <div class="row"><span>EUR/USD · long</span><b class="up">+38 pip</b></div>
+          <div class="row"><span>GBP/JPY · hedge</span><b class="up">+21 pip</b></div>
+          <div class="row"><span>USD/CHF · scalp</span><b class="dn">−6 pip</b></div>
+          <div class="row"><span>EUR/GBP · swing</span><b class="up">+44 pip</b></div>
+          <div class="row"><span>Esposizione netta</span><b>leva bassa · 2:1</b></div>
+          <div class="row" style="border:none"><span>Sessione</span><b>Webinar LIVE · in corso</b></div>
+          <div class="tag">◗ Esempio illustrativo dell'interfaccia operativa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMY / CORSI -->
+<section id="academy">
+  <div class="sec-head rv">
+    <div class="kicker"><span class="num">03</span> — Academy</div>
+    <h2>Impara le tecniche di Saverio Berlinzani, <em>da casa tua</em></h2>
+    <p>I corsi Saveforex sono strutturati in video-lezioni on-demand e live webinar, accessibili
+       dall'area riservata. I video-corsi hanno validità di 3 mesi. La prima lezione è gratuita.</p>
+  </div>
+  <div class="wrap">
+    <div class="courses">
+      <div class="course rv">
+        <div class="lvl">Livello base</div>
+        <h3>Corso FX Base</h3>
+        <p class="desc">Per neofiti e non: dalle basi del mercato dei cambi (storia, leva, conversioni,
+           correlazioni) fino alle metodologie "S" di Saverio.</p>
+        <div class="price"><span class="now">490€</span><span class="was">980€</span></div>
+        <div class="price" style="margin:0 0 4px"><span class="vat">IVA inclusa · scontato del 50%</span></div>
+        <ul class="feats">
+          <li>16 video-lezioni · circa 5 ore</li>
+          <li>Prima lezione gratuita</li>
+          <li>Metodologie da S1 a S7</li>
+          <li>Area riservata · 3 mesi</li>
+        </ul>
+        <a class="btn" href="#contatti">Acquista il corso</a>
+      </div>
+      <div class="course feat-course rv" style="transition-delay:.06s">
+        <div class="badge">Il cavallo di battaglia</div>
+        <div class="lvl">Livello avanzato</div>
+        <h3>Corso Hedging</h3>
+        <p class="desc">Per chi ha già solide basi: l'operatività principale di Saverio, l'hedging,
+           costruito su un sapiente utilizzo delle correlazioni tra cambi.</p>
+        <div class="price"><span class="now">su richiesta</span></div>
+        <div class="price" style="margin:0 0 4px"><span class="vat">Riservato ai trader avanzati</span></div>
+        <ul class="feats">
+          <li>Strategie di hedging sulle correlazioni</li>
+          <li>Elefanti e gazzelle · gestione del rischio</li>
+          <li>Carry trades e calcolo dello swap</li>
+          <li>Casi operativi reali</li>
+        </ul>
+        <a class="btn btn-solid" href="#contatti">Richiedi informazioni</a>
+      </div>
+      <div class="course rv" style="transition-delay:.1s">
+        <div class="lvl">Fondamenti</div>
+        <h3>Corso Macroeconomia</h3>
+        <p class="desc">Basi macroeconomiche per affrontare i mercati: politica monetaria delle banche
+           centrali, il vero market mover di lungo periodo.</p>
+        <div class="price"><span class="now">su richiesta</span></div>
+        <div class="price" style="margin:0 0 4px"><span class="vat">IVA inclusa</span></div>
+        <ul class="feats">
+          <li>Modelli IS-LM, AS-AD, PPP</li>
+          <li>Banche centrali e tassi</li>
+          <li>Equazioni, grafici e teorie applicate</li>
+          <li>Area riservata · 3 mesi</li>
+        </ul>
+        <a class="btn" href="#contatti">Scopri di più</a>
+      </div>
+    </div>
+    <div class="card col-12 rv" style="margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
+      <div>
+        <div class="idx">CORSO COMPLETO · LIVE</div>
+        <h3 style="margin-top:12px">Due giornate con Saverio — sabato e domenica</h3>
+        <p style="max-width:62ch">Formazione live via webinar con condivisione del desktop e chat scritta di supporto.
+           Slide in PDF incluse. Dal tasso di cambio e la leva fino allo swing trading, allo scalping e a tutte le metodologie S1–S7.</p>
+      </div>
+      <a class="btn btn-ghost" href="#contatti" style="flex:none">Vedi le prossime date</a>
+    </div>
+  </div>
+</section>
+
+<!-- METODO / LE S -->
+<section id="metodo">
+  <div class="sec-head rv">
+    <div class="kicker"><span class="num">04</span> — Il metodo</div>
+    <h2>Le metodologie <em>"S"</em> e l'arte dell'hedging</h2>
+    <p>Un approccio scientifico alla gestione del rischio, costruito in oltre quarant'anni tra sala
+       cambi interbancaria e trading indipendente. Sette metodologie operative, una disciplina.</p>
+  </div>
+  <div class="wrap">
+    <div class="methods">
+      <div class="m rv"><div class="s">S1</div><h4>Fondazione</h4><p>L'impostazione di base dell'operatività e delle fasce di oscillazione.</p></div>
+      <div class="m rv" style="transition-delay:.03s"><div class="s">S2</div><h4>Massimi &amp; minimi</h4><p>Lettura dei massimi e minimi significativi del prezzo.</p></div>
+      <div class="m rv" style="transition-delay:.06s"><div class="s">S3</div><h4>Swing</h4><p>Operatività di swing trading sui movimenti di medio respiro.</p></div>
+      <div class="m rv" style="transition-delay:.09s"><div class="s">S4</div><h4>Correlazioni</h4><p>Elefanti e gazzelle: come si muovono i cambi correlati.</p></div>
+      <div class="m rv"><div class="s">S5</div><h4>Hedging</h4><p>Coperture costruite sulle correlazioni tra valute.</p></div>
+      <div class="m rv" style="transition-delay:.03s"><div class="s">S6</div><h4>Scalping</h4><p>Operatività rapida e disciplina di esecuzione.</p></div>
+      <div class="m rv" style="transition-delay:.06s"><div class="s">S7</div><h4>Carry &amp; swap</h4><p>Carry trades e calcolo dello swap sulle posizioni.</p></div>
+      <div class="m rv" style="transition-delay:.09s"><div class="s" style="font-size:24px;font-style:normal;color:var(--blue)">⌁</div><h4>Leva bassa</h4><p>Il principio guida: profittevolezza attraverso la leva bassa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRADING SYSTEMS -->
+<section id="sistemi">
+  <div class="sec-head rv">
+    <div class="kicker"><span class="num">05</span> — Trading Systems</div>
+    <h2>Quando l'algoritmo <em>incontra</em> il discrezionale</h2>
+    <p>Dal 2017 Saverio sviluppa sistemi automatici per il mercato dei cambi: una chiave
+       di diversificazione del portafoglio, affiancata dal trading discrezionale come protezione nei
+       periodi di drawdown.</p>
+  </div>
+  <div class="wrap">
+    <div class="systems">
+      <div class="sys blu rv">
+        <span class="chip">Expert Advisor · V.8.0</span>
+        <h3>BluAtlantico</h3>
+        <p>Algoritmo FX sviluppato internamente e riprogettato dopo la crisi Covid-19 per ridurre
+           la volatilità in termini di drawdown e gestire eventi di mercato anomali. Opera su soli 4 tassi
+           di cambio, per una gestione più semplice e sicura delle posizioni.</p>
+        <div class="barline"></div>
+      </div>
+      <div class="sys verde rv" style="transition-delay:.06s">
+        <span class="chip">Expert Advisor</span>
+        <h3>VerdeDollaro</h3>
+        <p>Trading system sviluppato con il contributo di Angelo Melis,
+           che sfrutta la logica dell'Anti-Martingala per accompagnare i movimenti di mercato favorevoli
+           gestendo il rischio in modo progressivo.</p>
+        <div class="barline"></div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:26px;color:var(--muted-2);font-size:12.5px;font-family:var(--mono)">
+      ◗ Le performance passate non sono indicative di risultati futuri. Il trading comporta rischio di perdita del capitale.
+    </p>
+  </div>
+</section>
+
+<!-- ANALISI E WEBINAR FORMATIVI -->
+<section id="analisi" style="padding-top:20px;padding-bottom:0">
+  <div class="sec-head rv" style="margin-bottom:0">
+    <div class="kicker"><span class="num">06</span> — Analisi e formazione</div>
+    <h2>Analisi e <em>webinar formativi</em></h2>
+    <p>Saverio Berlinzani redige analisi e tiene webinar formativi in qualità di analista macro/tecnico
+       e formatore.</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="sec-head rv">
+    <div class="kicker"><span class="num">07</span> — Chi siamo</div>
+    <h2>Quarant'anni di mercato, <em>condivisi ogni giorno</em></h2>
+  </div>
+  <div class="wrap">
+    <div class="people people-single">
+      <div class="person rv">
+        <div class="avatar">
+          <span class="ph">Foto<br>Saverio</span>
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#c9a064" stroke-width="1"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6" stroke="#c9a064" stroke-width="1"/></svg>
+        </div>
+        <div>
+          <div class="role">Founder · Trader</div>
+          <h3>Saverio Berlinzani</h3>
+          <p>Dal <span class="yr">'92</span> spot trader al Banco Lariano di Milano; dal <span class="yr">'95</span>
+             capo cambista per Swiss Bank Corporation tra Lugano, Ginevra e Londra — market maker, opzioni
+             vanilla ed esotiche, carry trades. Dal <span class="yr">'98</span> rientra in Italia come consulente
+             finanziario e patrimoniale, presidente e socio fondatore di una società broker nel forex. Dal
+             <span class="yr">2009</span> trader indipendente e fondatore di Saveforex, la community con cui
+             condivide ogni giorno in tempo reale la propria operatività. Oltre <b>40 anni</b> tra market making,
+             brokeraggio e consulenza sul mercato valutario.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRESS -->
+    <div style="margin-top:64px" class="rv">
+      <div class="kicker" style="margin-bottom:24px"><span class="num">↳</span> Hanno parlato di noi · relatore in</div>
+      <div class="press">
+        <span class="pill"><b>Milano Finanza</b> 2013</span>
+        <span class="pill"><b>Gazzetta del Mezzogiorno</b> 2015</span>
+        <span class="pill"><b>Il Sole 24 Ore</b> 2016</span>
+        <span class="pill"><b>QN</b> 2019</span>
+        <span class="pill">ITForum Rimini</span>
+        <span class="pill">TOL Expo · Borsa di Milano</span>
+        <span class="pill">Money Expo Praga</span>
+        <span class="pill">Taranto Finanza Forum</span>
+        <span class="pill">IG Markets · FXCM · Directa SIM</span>
+      </div>
+      <div class="quote-grid">
+        <div class="quote"><q>Rimanete umili anche quando guadagnate.</q><div class="by">— Saverio Berlinzani</div></div>
+        <div class="quote"><q>Controllate sempre il curriculum delle persone a cui affidate i vostri risparmi.</q><div class="by">— Saverio Berlinzani</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="social" style="padding-top:40px">
+  <div class="sec-head rv">
+    <div class="kicker"><span class="num">08</span> — Ogni giorno</div>
+    <h2>Saverio pubblica <em>tutti i giorni</em> sui social</h2>
+    <p>Analisi, news macroeconomiche e operatività: il flusso quotidiano del metodo Saveforex vive
+       sui canali. Il sito è la vetrina, i social sono il diario di bordo.</p>
+  </div>
+  <div class="wrap">
+    <div class="social-grid">
+      <a class="soc rv" href="https://www.youtube.com/@saverioberlinzani9759" target="_blank" rel="noopener">
+        <div class="si"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg></div>
+        <div class="sn">YouTube</div><div class="sh">@saverioberlinzani</div>
+      </a>
+      <a class="soc rv" style="transition-delay:.03s" href="https://www.facebook.com/berlinzani/" target="_blank" rel="noopener">
+        <div class="si"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M14 8h2V5h-2c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2l1-3h-3V8z" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <div class="sn">Facebook</div><div class="sh">/berlinzani</div>
+      </a>
+      <a class="soc rv" style="transition-delay:.06s" href="https://x.com/saveforex" target="_blank" rel="noopener">
+        <div class="si"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <div class="sn">X / Twitter</div><div class="sh">@saveforex</div>
+      </a>
+      <a class="soc rv" style="transition-delay:.09s" href="https://discord.gg/ygQ2rHzjn4" target="_blank" rel="noopener">
+        <div class="si"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M8 12a2 2 0 11.001-.001M16 12a2 2 0 11.001 0M6 16c-1.5-1-2.5-3-2.5-5.5C3.5 7 6 5 9 5h6c3 0 5.5 2 5.5 5.5 0 2.5-1 4.5-2.5 5.5l1 3-3.5-2H11l-3.5 2 1-3z" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <div class="sn">Discord</div><div class="sh">community →</div>
+      </a>
+      <a class="soc rv" style="transition-delay:.12s" href="#contatti">
+        <div class="si"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><circle cx="17" cy="7" r="1" fill="currentColor"/></svg></div>
+        <div class="sn">Instagram</div><div class="sh">@saveforex</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATTI -->
+<section id="contatti">
+  <div class="sec-head rv">
+    <div class="kicker"><span class="num">09</span> — Contatti</div>
+    <h2>Parla con <em>Saveforex</em></h2>
+    <p>Per corsi, abbonamenti alla community, trading systems. Risponderemo
+       nei giorni lavorativi.</p>
+  </div>
+  <div class="wrap">
+    <div class="contact">
+      <div class="cinfo rv">
+        <div class="crow">
+          <div class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.4"/></svg></div>
+          <div><div class="cl">Saverio Berlinzani</div><a class="cv" href="mailto:berlinzani@saveforex.it">berlinzani@saveforex.it</a></div>
+        </div>
+        <div class="crow">
+          <div class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.4"/></svg></div>
+          <div><div class="cl">Orari</div><div class="cv">Lun – Ven · 9.00 – 17.30</div></div>
+        </div>
+        <div class="crow" style="border:none">
+          <div class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 6 6 .5-4.5 4 1.5 6L12 15l-6 3.5 1.5-6L3 8.5 9 8l3-6z" stroke="currentColor" stroke-width="1.1"/></svg></div>
+          <div><div class="cl">Filosofia</div><div class="cv" style="font-family:var(--serif);font-style:italic;color:var(--gold-bright)">Profittevoli con la leva bassa.</div></div>
+        </div>
+      </div>
+      <form class="cform rv" id="contactForm" style="transition-delay:.08s">
+        <label for="nm">Nome e cognome</label>
+        <input id="nm" name="nome" type="text" placeholder="Il tuo nome" required>
+        <label for="em">Email</label>
+        <input id="em" name="email" type="email" placeholder="nome@email.it" required>
+        <label for="tp">Interesse</label>
+        <select id="tp" name="interesse" style="width:100%;background:rgba(7,11,20,.6);border:1px solid var(--line-2);border-radius:3px;padding:13px 15px;color:var(--paper);font-family:var(--sans);font-size:15px">
+          <option>Community &amp; Webinar</option>
+          <option>Corsi / Academy</option>
+          <option>Trading Systems</option>
+        </select>
+        <label for="ms">Il tuo messaggio</label>
+        <textarea id="ms" name="messaggio" placeholder="Raccontaci di cosa hai bisogno…"></textarea>
+        <!-- honeypot anti-spam -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <button class="btn btn-solid" type="submit" id="sendBtn">Invia richiesta
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+        <div class="form-msg" id="formMsg" role="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <a class="brand" href="#top">
+          <svg class="mark" viewBox="0 0 40 40" fill="none">
+            <rect x="1" y="1" width="38" height="38" rx="3" stroke="#c9a064" stroke-width="1.2"/>
+            <rect x="11" y="20" width="3.4" height="11" fill="#5a9cd0"/><rect x="18.3" y="13" width="3.4" height="15" fill="#e7c98c"/><rect x="25.6" y="17" width="3.4" height="9" fill="#79b394"/>
+          </svg>
+          <span class="wordmark"><span class="wm-top">SAVE<span>FOREX</span></span><span class="wm-sub">Academy &amp; Systems · 2009</span></span>
+        </a>
+        <p>L'ecosistema di formazione, community e trading systems sul mercato valutario di Saverio Berlinzani.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Ecosistema</h5>
+        <a href="#ecosistema">Community &amp; Webinar</a>
+        <a href="#academy">Academy &amp; Corsi</a>
+        <a href="#sistemi">Trading Systems</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contatti &amp; legal</h5>
+        <a href="mailto:berlinzani@saveforex.it">berlinzani@saveforex.it</a>
+        <a href="https://www.youtube.com/@saverioberlinzani9759" target="_blank" rel="noopener">YouTube</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="#" data-cookie-prefs>Preferenze cookie</a>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Avvertenza sui rischi.</strong> Le informazioni presenti in questo sito hanno scopo esclusivamente
+      informativo e formativo e rappresentano una consulenza generica sull'andamento del mercato valutario, senza
+      alcun riferimento a raccomandazioni personalizzate su strumenti finanziari. Non costituiscono consulenza
+      personalizzata ai sensi dell'art. 1, comma 5-septies del D.lgs. 58/98 e successive modifiche. Chi scrive non
+      conosce le caratteristiche, l'esperienza finanziaria, la situazione patrimoniale e la tolleranza al rischio dei
+      singoli lettori. Le decisioni operative sono assunte dall'utente a proprio esclusivo rischio: si declina ogni
+      responsabilità per eventuali conseguenze negative. Il trading sul Forex e sui CFD comporta un elevato rischio di
+      perdita del capitale e non è adatto a tutti gli investitori. Le performance passate non sono indicative di
+      risultati futuri. Questo sito non è una testata giornalistica. Saverio Berlinzani redige le analisi anche in
+      qualità di consulente esterno di ActivTrades, broker regolamentato con stabile organizzazione in Italia. I dati
+      personali raccolti tramite il sito sono trattati ai sensi della normativa vigente in materia di protezione dei
+      dati personali (Reg. UE 2016/679 – GDPR).
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2009–2026 Saveforex · Saverio Berlinzani. Tutti i diritti riservati.</span>
+      <span>Academy &amp; Systems — since 2009</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
